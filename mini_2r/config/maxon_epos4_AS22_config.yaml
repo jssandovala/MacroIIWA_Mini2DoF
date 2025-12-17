@@ -1,0 +1,29 @@
+# Configuration file for Maxon EPOS4 24/5 drive
+vendor_id: 0x000000fb
+product_id: 0x69500000 # Product code ESI file
+Revision number: 0x01700000
+ssign_activate: 0x0300 # DC Synch register
+auto_fault_reset: true # true = automatic fault reset, false = fault reset on rising edge command interface "reset_fault"
+sdo: # sdo data to be transferred at drive startup
+  - { index: 0x60C2, sub_index: 1, type: int8, value: 10 } # Set interpolation time for cyclic modes to 10 ms
+  - { index: 0x60C2, sub_index: 2, type: int8, value: -3 } # Set base 10-3s
+rpdo: # RxPDO = receive PDO 4 Mapping
+  - index: 0x1603
+    channels:
+      - { index: 0x6040, sub_index: 0, type: uint16, default: 0 } # Control word
+      - { index: 0x607a, sub_index: 0, type: int32, command_interface: position, factor: 1303.7972, default: .nan } # Target position "rad"
+      - { index: 0x60ff, sub_index: 0, type: int32, command_interface: velocity, factor: 9.549296, default: 0 } # Target velocity  "rad/s"
+      - { index: 0x6071, sub_index: 0, type: int16, command_interface: effort, factor: 10000, default: 0 } # Target torque   "Nm"
+      - { index: 0x60b0, sub_index: 0, type: int32, default: 0 } # Offset position
+      - { index: 0x60b1, sub_index: 0, type: int32, default: 0 } # Offset velocity
+      - { index: 0x60b2, sub_index: 0, type: int16, default: 0 } # Offset torque
+      - { index: 0x6060, sub_index: 0, type: int8, default: 8 } # Mode of operation
+tpdo: # TxPDO = transmit PDO 4 Mapping
+  - index: 0x1a03
+    channels:
+      - { index: 0x6041, sub_index: 0, type: uint16 } # Status word
+      - { index: 0x6064, sub_index: 0, type: int32, state_interface: position, factor: 0.776699e-3 } # Position actual value  "rad"
+      - { index: 0x606c, sub_index: 0, type: int32, state_interface: velocity, factor: 0.10471975 } # Velocity actual value  "rad/s"
+      - { index: 0x6077, sub_index: 0, type: int16, state_interface: effort, factor: 0.0001 } # Torque actual value   "Nm"
+      - { index: 0x6061, sub_index: 0, type: int8, state_interface: mode_of_operation } # Mode of operation display
+      
