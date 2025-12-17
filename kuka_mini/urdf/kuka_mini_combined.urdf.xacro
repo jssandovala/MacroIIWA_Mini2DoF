@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot name="combined_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <link name="world"/>
+
+    <!-- Include the KUKA -->   
+    <xacro:include filename="$(find iiwa_description)/urdf/iiwa.urdf.xacro"/>
+
+    <!-- Include the mini -->
+    <!-- <xacro:include filename="$(find mini_control)/description/urdf/rrbot_one.urdf.xacro"/>  -->
+    <xacro:include filename="$(find mini_2r)/description/urdf/rrbot_trial.urdf.xacro"/>
+   
+    
+</robot>
